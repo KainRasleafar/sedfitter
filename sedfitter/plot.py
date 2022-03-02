@@ -319,7 +319,11 @@ def plot(input_fits, output_dir=None, select_format=("N", 1), plot_max=None,
                     lines.append(np.column_stack([s.wav, flux[:, j]]))
                     colors.append(color[color_type][j])
             else:
-                lines.append(np.column_stack([s.wav, flux]))
+                try:
+                    lines.append(np.column_stack([s.wav / s.wav.unit, flux / flux.unit]))
+                except:
+                    lines.append(np.column_stack([s.wav / s.wav.unit, flux]))   
+                #lines.append(np.column_stack([s.wav, flux]))
                 colors.append(color[color_type])
 
             if show_convolved:
